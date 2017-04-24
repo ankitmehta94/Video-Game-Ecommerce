@@ -4,22 +4,25 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import './index.css'
-import {fetchPopularGames} from './actions'
+import { Header, Label, Icon } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 class navBar extends  React.Component {
+    state = {
+        selectedGame:[]
+    }
     render(){
         return (
-            <div className="navBar">PLEASE ANYTHING WILL DO</div>
+            <Header as='h3' block>
+                <Label>
+                    <Icon name='shopping cart' size='big' />{this.state.selectedGame.length>0?this.state.selectedGame.length:''}
+                </Label>
+
+            </Header>
         )
-    }
-}
-function mapStateToProps(state) {
-    return {
-        games:state.games
     }
 }
 navBar.propTypes= {
     fetchPopularGames:React.PropTypes.func.isRequired,
     games:React.PropTypes.array.isRequired
 };
-export default connect(mapStateToProps,{fetchPopularGames})(navBar)
+export default navBar

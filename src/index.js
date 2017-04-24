@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import NavBar from './navBar'
 import GamesPage from './GamesPage'
 import './index.css';
 import { Route, BrowserRouter} from 'react-router-dom'
@@ -18,6 +19,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter >
             <div>
+                <NavBar/>
             <Route exact path="/" component={App}/>
             <Route exact path="/:id" component={GamesPage}/>
             </div>

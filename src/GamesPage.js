@@ -29,33 +29,6 @@ class GamesPage extends  React.Component {
             })
         }
     }
-
-    createGameCardList(){
-        return this.props.games.map((game)=>{
-            console.log(game);
-            if(game.cover!==undefined){
-                return (
-
-                    <div className="ui move up reveal"  key={game.id}>
-                        <div className="ui card visible content" >
-                            <div className="image"><img src={'https:' + game.cover.url} alt="Game Cover"/></div>
-                            <div className="content">
-                                <div className="header">{game.name}</div>
-                            </div>
-                        </div>
-                        <div className="ui card hidden content">
-                            <div className="content">
-                                <div className="ui star rating" data-rating="5" data-max-rating="5">xxxxxx</div>
-                            </div>
-                        </div>
-                    </div>
-
-                )
-            }
-        })
-
-
-    }
     render(){
         return (
             <div>

@@ -3,56 +3,80 @@
  */
 import React from 'react'
 import {connect} from 'react-redux';
-// import { Card, Icon, Image } from 'semantic-ui-react'
+import { Rating,Button,Icon, Reveal, Image, Card, Grid } from 'semantic-ui-react'
 import {fetchPopularGames} from './actions'
 import {Link} from 'react-router-dom'
 class GamesList extends  React.Component {
     componentDidMount () {
         this.props.fetchPopularGames()
     }
-    createGameCardList(){
+    createGameCard(){
         return this.props.games.map((game)=>{
             console.log(game);
             if(game.cover!==undefined){
                 return (
+                        <Card key={game.id}>
+                            <Reveal animated='move up'>
+                                <Reveal.Content visible>
+                                    <Image src={'https:' + game.cover.url} size='medium' />
+                                </Reveal.Content>
+                                <Reveal.Content hidden>
+                                    <Grid  centered  verticalAlign='middle' container={true}>
+                                        <Grid.Column verticalAlign='middle'>
+                                            <Button.Group attached='top' vertical >
+                                                <Button animated='vertical'>
+                                                    <Button.Content visible>ADD TO CART</Button.Content>
+                                                    <Button.Content hidden>
+                                                        <Icon name='shop' />
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button animated='vertical'>
+                                                    <Button.Content visible>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</Button.Content>
+                                                    <Button.Content hidden>
+                                                        {game.aggregated_rating?'BUY':'GET'}
+                                                    </Button.Content>
+                                                </Button>
+                                            </Button.Group>
+                                            <Grid.Row centered>
+                                                {game.aggregated_rating &&<Rating icon='star' defaultRating={game.aggregated_rating*0.05} maxRating={5} disabled={true} />}
+                                            </Grid.Row>
+                                        </Grid.Column>
+                                    </Grid>
+                                </Reveal.Content>
+                            </Reveal>
+                            <Card.Content>
+                                <Card.Header>
+                                    <Link to={`/${game.id}`} >{game.name}</Link>
+                                </Card.Header>
+                            </Card.Content>
+                        </Card>
 
-                        <div className="ui move up reveal"  key={game.id}>
-                    <div className="ui card visible content" >
-                        <div className="image"><img src={'https:' + game.cover.url} alt="Game Cover"/></div>
-                        <div className="content">
-                            <div className="header">{game.name}</div>
+
+                        )
+                        }
+                        })
+
+
+                        }
+                        createCardGameList(){
+                        return (
+                        <div className="ui three stackable cards">
+                        {this.createGameCard()}
                         </div>
-                    </div>
-                            <div className="ui card hidden content">
-                        <div className="content">
-                            <Link to={`/${game.id}`}>xxxxxx</Link>
+                        )
+                    }
+                        render(){
+                        return (
+                        <div className="twelve wide column">
+                        {this.createCardGameList()}
                         </div>
-                    </div>
-                    </div>
+                        )
+                    }
+                        }
+                        function mapStateToProps(state) {
+                        return {
+                        games:state.games
+                    }
+                    }
 
-                )
-            }
-                    })
-
-
-    }
-    render(){
-        return (
-            <div className=" thirteen wide column">
-            <div className="ui six cards column">
-                {this.createGameCardList()}
-            </div>
-            </div>
-        )
-    }
-}
-function mapStateToProps(state) {
-    return {
-        games:state.games
-    }
-}
-GamesList.propTypes= {
-    fetchPopularGames:React.PropTypes.func.isRequired,
-    games:React.PropTypes.array.isRequired
-};
-export default connect(mapStateToProps,{fetchPopularGames})(GamesList)
+                        export default connect(mapStateToProps,{fetchPopularGames})(GamesList)
