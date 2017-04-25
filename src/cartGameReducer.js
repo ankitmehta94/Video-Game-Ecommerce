@@ -3,9 +3,11 @@
  */
 import {GAME_DETAIL_ADDED_TO_CART} from './actions'
 export default function cartGames(state= [], action = {}) {
+
     switch (action.type){
         case GAME_DETAIL_ADDED_TO_CART:
-            return action.game
+            return[...state.concat(action.game)
+            ]
         default:return state;
     }
 }

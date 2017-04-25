@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import NavBar from './navBar'
 import GamesPage from './GamesPage'
+import CartPage from './CartPage'
 import './index.css';
 import { Route, BrowserRouter} from 'react-router-dom'
 import  { Provider }  from 'react-redux';
@@ -21,7 +22,8 @@ ReactDOM.render(
             <div>
                 <NavBar/>
             <Route exact path="/" component={App}/>
-            <Route exact path="/:id" component={GamesPage}/>
+            <Route exact path="/games/:id" component={GamesPage}/>
+                <Route exact path="/cart" component={CartPage}/>
             </div>
         </BrowserRouter></Provider>,
     document.getElementById('root')

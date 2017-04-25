@@ -20,6 +20,7 @@ export function fetchPopularGames() {
     }
 }
 export function addGameToCart(game){
+    console.log('+1');
     return {
         type:GAME_DETAIL_ADDED_TO_CART,
         game

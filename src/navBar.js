@@ -8,21 +8,27 @@ import { Header, Label, Icon } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 class navBar extends  React.Component {
     state = {
-        selectedGame:[]
+        selectedGames:[]
+    }
+    componentWillReceiveProps = (nextProps) =>{
+        this.setState({selectedGames:nextProps.selectedGames})
     }
     render(){
         return (
             <Header as='h3' block>
-                <Label>
-                    <Icon name='shopping cart' size='big' />{this.state.selectedGame.length>0?this.state.selectedGame.length:''}
-                </Label>
+               <Link to="/cart"> <Label>
+                    <Icon name='shopping cart' size='big' />{this.state.selectedGames.length}
+               </Label></Link>
 
             </Header>
         )
     }
 }
-navBar.propTypes= {
-    fetchPopularGames:React.PropTypes.func.isRequired,
-    games:React.PropTypes.array.isRequired
-};
-export default navBar
+function mapStateToProps(state,props) {
+    console.log(props);
+    console.log(state);
+    return {
+        selectedGames:state.cartGames
+    }
+}
+export default connect(mapStateToProps)(navBar)

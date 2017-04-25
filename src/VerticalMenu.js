@@ -28,7 +28,7 @@ return (
     <div className="four wide column">
         {this.state.loader===false?
         <Menu fluid vertical tabular>
-            <Menu.Item name='Most Popular Games' active={this.state.activeItem === 'popular'} onClick={()=>{this.props.fetchPopularGames()}}/>
+            <Menu.Item name='Most Popular Games' active={this.state.activeItem === 'popular'} onClick={()=>{this.props.fetchPopularGames();this.setState({activeItem:'popular'})}}/>
             {this.createGenreList()}
         </Menu>: <Loader>Loading</Loader>}
         </div>
