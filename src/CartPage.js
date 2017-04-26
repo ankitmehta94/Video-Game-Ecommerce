@@ -4,15 +4,15 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import './index.css'
-import { Step , Statistic, Grid, Item, Button ,Icon,  Form, Menu, Image } from 'semantic-ui-react'
+import { Step , Statistic, Grid, Item, Button ,Icon,  Form, Menu, Image,Header, Modal } from 'semantic-ui-react'
 //import {browserHistory} from 'react-router-dom'
 const paymentArray = [
-    {name:'PayPal',icon:'https://dl.dropboxusercontent.com/content_link/4Cr49gkHxtuOBAGfOwa8OMMBHcRt5keU3CSfVzupqM77fVRcq3zl7sWKrRJcCsHh/file'},
-    {name:'American Express',icon:'https://dl.dropboxusercontent.com/content_link/k9hxZrqOrXol75KMvKxD1ZRfXRFWUAdDpm225hKFJqE4KuujrG2ChpJaEAo2codP/file'},
-    {name:'Ebay',icon:'https://dl.dropboxusercontent.com/content_link/94Ph3XcJDUzPP2Sqg9xVoVDFaQbOI4EHWm31yqXq60CZPFiv1bzhm11PiMtglqXY/file'},
-    {name:'Google Checkout',icon:'zhttps://dl.dropboxusercontent.com/content_link/iJmcClg5OBidxOFT7OhNqtr2gPTBk5Ty26ysDRY8tyRdsqAz2AN1JFHmj5hcPnsq/file'},
-    {name:'VISA',icon:'https://dl.dropboxusercontent.com/content_link/JxC9i1DlIkS0r5tsF0VgcjjQut017nGK8jrAw4q0eZqQOPjsObK2YymKCKFRhdp9/file'},
-    {name:'MasterCard',icon:'https://dl.dropboxusercontent.com/content_link/N3Jkz0HEloSWRKlTBb66vXBtU1QxrzAUYgG0hBXEuqqpuKo9FEqQztQfhT98WwQw/file'}];
+    {name:'PayPal',icon:'paypal-curved-64px.png'},
+    {name:'American Express',icon:'american-express-curved-64px.png'},
+    {name:'Ebay',icon:'ebay-curved-64px.png'},
+    {name:'Google Checkout',icon:'google-checkout-curved-64px.png'},
+    {name:'VISA',icon:'visa-curved-64px.png'},
+    {name:'MasterCard',icon:'mastercard-curved-64px.png'}];
 class CartPage extends  React.Component {
     state = {
         selectedGames:[],
@@ -34,7 +34,7 @@ class CartPage extends  React.Component {
     createItems(games){
         console.log(games)
        return games.map((game=>{
-           return (<Item key={game.id}>
+           return (<Item key={game.id} >
                 <Item.Image size='tiny' src={'https:' + game.cover.url} />
                 <Item.Content verticalAlign='middle'>
                     <Item.Header >{game.name}</Item.Header>
@@ -47,19 +47,28 @@ class CartPage extends  React.Component {
 
     }
     renderPayment(pay) {
-        return (<Grid.Column width={8}>
-            <Grid.Row><Image src={pay.icon} size={'small'}/></Grid.Row>
-            <Grid.Row> <Button animated='vertical' onClick={this.goToAddress}>
-                <Button.Content visible>PAY</Button.Content>
-                <Button.Content hidden>
-                    {this.totalAmountToPay()}
-                </Button.Content>
-            </Button></Grid.Row></Grid.Column>
+        return (<Grid.Column width={8} centered>
+            <Grid.Row><Image src={'https://raw.githubusercontent.com/ankitmehta94/Video-Game-Ecommerce/master/src/assets/'+pay.icon} size={'small'}/></Grid.Row>
+            <Grid.Row> </Grid.Row>
+                <Modal trigger={<Button animated='vertical'>
+                    <Button.Content visible>PAY</Button.Content>
+                    <Button.Content hidden>
+                        {this.totalAmountToPay()}
+                    </Button.Content>
+                </Button>}>
+                    <Modal.Header>You Have Completed The Game Buying Process</Modal.Header>
+                    <Modal.Content image>
+                        <Modal.Description>
+                            <Header>Sorry! You don't actually get the game(s), but you didn't actually pay either. No harm no foul!!!</Header>
+                        </Modal.Description>
+                    </Modal.Content>
+                </Modal></Grid.Column>
     )
     }
+
     createPaymentList(){
         return paymentArray.map((pay)=>{
-return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayType.name === pay.name} />)
+return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayType.name === pay.name}  onClick={()=>{this.setState({activePayType:pay})}} />)
         })
     }
     goToAddress=()=>{this.setState({activeStep:'address',addressDone:false,totallingDone:true});console.log('BC')}
@@ -130,6 +139,7 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
                 </Grid.Column>
                     {this.renderPayment(this.state.activePayType)}
                 </Grid>}
+
             </Grid>)
 
 
