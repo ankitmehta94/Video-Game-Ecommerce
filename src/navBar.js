@@ -4,8 +4,9 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import './index.css'
-import { Header, Label, Icon } from 'semantic-ui-react'
+import { Header, Label, Icon, Segment, Sidebar, Menu } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import { StickyContainer, Sticky } from 'react-sticky';
 class navBar extends  React.Component {
     state = {
         selectedGames:[]
@@ -15,12 +16,17 @@ class navBar extends  React.Component {
     }
     render(){
         return (
+            <StickyContainer>
+            <Sticky>
             <Header as='h3' block>
-               <Link to="/cart"> <Label>
+                <Label> <Link to="/cart">
                     <Icon name='shopping cart' size='big' />{this.state.selectedGames.length}
-               </Label></Link>
+               </Link></Label>
 
             </Header>
+            </Sticky>
+            </StickyContainer>
+
         )
     }
 }

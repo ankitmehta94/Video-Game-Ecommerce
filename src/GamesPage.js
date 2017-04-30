@@ -4,26 +4,62 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import {fetchGameInformation} from './actions'
-import {  Grid, List,Image,Header ,Segment} from 'semantic-ui-react'
+import {  Grid, List,Image,Header ,Segment,Icon} from 'semantic-ui-react'
 import SummarySegment from './SummarySegment'
 class GamesPage extends  React.Component {
     state={
         game:this.props.singleGame?this.props.singleGame:null,
         screenShots:this.props.singleGame?this.props.singleGame.screenshots:null,
-        mainPictureUrl:null
+        mainPictureUrl:null,
+        cover:null,
+
     }
     componentWillReceiveProps = (nextProps) =>{
-        console.log()
         this.setState({
             game:nextProps.singleGame,
             screenShots:nextProps.singleGame.screenshots,
-            mainPictureUrl:'https:'+nextProps.singleGame.screenshots[0].url
+            mainPictureUrl:'https:'+nextProps.singleGame.cover.url,
+            cover:nextProps.singleGame.cover
         })
     }
+createVideoDisplay(){
+   let  {videos} = this.state.game;
+    let i = 0;
 
+        if(videos){
+            let link = '//www.youtube.com/embed/'+videos[i].video_id
+            let nextVideo = function () {
+                if(i<videos.length){
+                    i++;
+                    link = '//www.youtube.com/embed/'+videos[i].video_id
+                    console.log(link);
+                    document.getElementById('embeddedVideo').src = link;
+                }
+            }
+            let previousVideo = function () {
+                if(i>1){
+                    i--;
+                    link = '//www.youtube.com/embed/'+videos[i].video_id
+                    document.getElementById('embeddedVideo').src = link;
+                }
+            }
+
+            return(  <Grid.Row centered>
+                <Grid.Column width={2} verticalAlign={'middle'} ><Icon name={'chevron circle left'} size='huge' onClick={previousVideo} /></Grid.Column>
+                <Grid.Column  width={10}><Segment>
+                    <iframe id="embeddedVideo" width="854" height="400" src={link} ></iframe>
+                </Segment></Grid.Column>
+                <Grid.Column  width={2} verticalAlign={'middle'}><Icon name={'chevron circle right'} size='huge' onClick={nextVideo}/></Grid.Column>
+            </Grid.Row>)
+        }
+}
     componentDidMount () {
         console.log(this.props.match.params.id)
         this.props.fetchGameInformation(this.props.match.params.id)
+    }
+    createCoverDisplay(){
+        return (this.state.cover&&<List.Item onMouseOver={()=>{this.setState({mainPictureUrl:'https:' + this.state.cover.url})}} >
+            <Image avatar src={'https:' + this.state.cover.url} size={'mini'}/></List.Item>)
     }
     createImageDisplay (){
         console.log(this.state.game)
@@ -38,16 +74,21 @@ class GamesPage extends  React.Component {
         return (
             <div>
                 <Segment> <Header size={'huge'}>{this.state.game.name}</Header></Segment>
-                <Grid>
-                    <Grid.Column width={4}>
+                <Grid  >
+                    <Grid.Row>
+                    <Grid.Column width={5}>
                     <Grid.Row >
-                    <List>{this.createImageDisplay()}</List>
-                        <Image src={this.state.mainPictureUrl} size={'medium'}/>
+                        <List floated={'left'}>{this.createCoverDisplay()}
+                            {this.createImageDisplay()}</List>
+                        <Image floated={'left'} src={this.state.mainPictureUrl} size={'medium'}/>
                     </Grid.Row>
                     </Grid.Column>
-                    <Grid.Column width={10}>
+                    <Grid.Column width={11}>
                         <SummarySegment game={this.state.game}/>
-                    </Grid.Column></Grid></div>
+                    </Grid.Column>
+                    </Grid.Row>
+                    {this.createVideoDisplay()}
+                  </Grid></div>
 
         )
     }

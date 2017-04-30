@@ -46,7 +46,7 @@ class SummarySegment extends React.Component{
         return (<Segment>
             <Segment raised>
                 <Label as='a' color='red'  ribbon>Summary</Label>{this.props.game.summary}</Segment>
-            <Segment raised><Label as='a' color='blue' ribbon>Summary</Label>{this.props.game.storyline}</Segment>
+            {this.props.game.storyline&&<Segment raised><Label as='a' color='blue' ribbon>Storyline</Label>{this.props.game.storyline}</Segment>}
             <List horizontal>
                 <List.Item>
                     {this.state.pegi && <Image  src={pegiLink1+(this.state.pegi.rating-1)+pegiLink2} size={'mini'}/>}</List.Item>

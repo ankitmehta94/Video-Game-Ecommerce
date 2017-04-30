@@ -4,7 +4,7 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import './index.css'
-import { Step , Statistic, Grid, Item, Button ,Icon,  Form, Menu, Image,Header, Modal } from 'semantic-ui-react'
+import { Step , Statistic, Grid, Item, Button ,Icon,  Form, Menu, Image,Header, Modal,Message } from 'semantic-ui-react'
 //import {browserHistory} from 'react-router-dom'
 const paymentArray = [
     {name:'PayPal',icon:'paypal-curved-64px.png'},
@@ -20,10 +20,18 @@ class CartPage extends  React.Component {
         totallingDone:false,
         addressDone:false,
         paymentDone:false,
-        activePayType:paymentArray[0]
+        activePayType:paymentArray[0],
+        fPeople:{first_name:'',last_name:'',email:''},
+        disableItemsButton:false
     }
     componentWillReceiveProps = (nextProps) =>{
-        this.setState({selectedGames:nextProps.selectedGames})
+        console.log(nextProps.selectedGames.length);
+        if(nextProps.selectedGames.length===0){
+            window.location = '/';
+        }else{
+            this.setState({selectedGames:nextProps.selectedGames})
+        }
+
     }
     componentDidMount () {
         this.setState({selectedGames:this.props.selectedGames})
@@ -45,6 +53,44 @@ class CartPage extends  React.Component {
             </Item>)
         }))
 
+    }
+    renderForm(){
+        console.log(getRandomArbitrary(0,50));
+        let autoFill = ()=>{this.setState({fPeople:this.props.people[getRandomArbitrary(0,50)]});console.log('What the fuck?')}
+        if(this.state.activeStep==='address'){
+            console.log(this.state.fPeople)
+            return (<Grid centered><Grid.Row>
+                <Message
+                    attached
+                    floating={true}
+                    compact={false}
+                    header='Hey we need your details to send you the games!'
+                    content='Fill out the form below to complete your first mission'
+                />
+                <Form className='attached fluid segment'>
+                    <Form.Group widths='equal'>
+                        <Form.Input label='First Name' placeholder='First Name' value={this.state.fPeople.first_name} type='text' />
+                        <Form.Input label='Last Name' placeholder='Last Name'  value={this.state.fPeople.last_name} type='text' />
+                    </Form.Group>
+                    <Form.Input label='Email' placeholder='Email' type='text'  value={this.state.fPeople.email} />
+                    <Form.Checkbox inline label='I agree to the terms and conditions which are to play these kickass games' />
+                </Form>
+            </Grid.Row>
+            <Grid.Row>
+                <Button animated='vertical' onClick={autoFill}>
+                    <Button.Content visible>Too Lazy?</Button.Content>
+                    <Button.Content hidden>
+                        Auto-Fill
+                    </Button.Content>
+                </Button>
+            </Grid.Row>
+                <Grid.Row>  <Button animated='vertical' onClick={this.goToPayment}>
+                <Button.Content visible>NEXT</Button.Content>
+                <Button.Content hidden>
+                    <Icon name='chevron right' />
+                </Button.Content>
+            </Button></Grid.Row></Grid>)
+        }
     }
     renderPayment(pay) {
         return (<Grid.Column width={8} centered>
@@ -82,6 +128,18 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
 
         return pay
     }
+    howMuchToPay(){
+        if(this.props.selectedGames.length>0){
+            return(<Statistic horizontal value={this.totalAmountToPay()} label='Dollars' />)
+        }else{
+            this.setState({disableItemsButton:true})
+                return(
+                    <Message content={'THERE ARE NO GAMES IN YOUR CART '}/>
+                    )
+
+        }
+    }
+
     render(){
         return (
             <Grid centered>
@@ -103,35 +161,16 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
                 </Grid.Row>
                 {this.state.activeStep==='totalling'&&<Grid centered>
             <Grid.Row>{this.createItemList()}</Grid.Row>
-            <Grid.Row><Statistic horizontal value={this.totalAmountToPay()} label='Dollars' /></Grid.Row>
-            <Grid.Row>  <Button animated='vertical' onClick={this.goToAddress}>
+
+            <Grid.Row>{this.howMuchToPay()}</Grid.Row>
+            <Grid.Row>  <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToAddress}>
                 <Button.Content visible>NEXT</Button.Content>
                 <Button.Content hidden>
                     <Icon name='chevron right' />
                 </Button.Content>
             </Button></Grid.Row>
 
-        </Grid>}      {this.state.activeStep==='address'&&<Grid centered><Grid.Row>
-                <Form size={'big'}>
-                    <Form.Group >
-                        <Form.Input label='First name' placeholder='First name'  width={8} />
-                        <Form.Input label='Last name' placeholder='Last name'  width={8}   />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Input label='Address' placeholder='Flat No, Locality' width={12} />
-                        <Form.Input label='City' placeholder='City' width={4}/>
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                        <Form.Input label='State' placeholder='State'  />
-                        <Form.Input label='Country' placeholder='Country' />
-                    </Form.Group>
-                </Form>
-            </Grid.Row> <Grid.Row>  <Button animated='vertical' onClick={this.goToPayment}>
-                <Button.Content visible>NEXT</Button.Content>
-                <Button.Content hidden>
-                <Icon name='chevron right' />
-                </Button.Content>
-            </Button></Grid.Row></Grid>}
+        </Grid>}      {this.renderForm()}
                 {this.state.activeStep==='payment'&&<Grid centered><Grid.Column width={8}>
                     <Menu fluid vertical tabular>
                         {this.createPaymentList()}
@@ -149,7 +188,11 @@ function mapStateToProps(state,props) {
     console.log(props);
     console.log(state);
     return {
-        selectedGames:state.cartGames
+        selectedGames:state.cartGames,
+        people:state.randomPeople
     }
+}
+function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
 }
 export default connect(mapStateToProps)(CartPage)
