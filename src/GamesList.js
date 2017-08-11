@@ -3,13 +3,14 @@
  */
 import React from 'react'
 import {connect} from 'react-redux';
-import { Rating,Button,Icon, Reveal, Image, Card, Grid } from 'semantic-ui-react'
+import { Rating,Button,Icon, Reveal, Image, Card, Grid,Loader } from 'semantic-ui-react'
 import {fetchPopularGames,addGameToCart} from './actions'
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom'
 class GamesList extends  React.Component {
+    state={loader:true};
     componentDidMount () {
-        this.props.fetchPopularGames()
+        this.props.fetchPopularGames().then(this.setState({loader:false}))
     }
     createGameCard(){
         return this.props.games.map((game)=>{
@@ -71,6 +72,7 @@ class GamesList extends  React.Component {
     render(){
         return (
             <div className="twelve wide column">
+                <Loader active={this.state.loader}>Loading</Loader>
                 {this.createCardGameList()}
             </div>
         )

@@ -18,11 +18,13 @@ class navBar extends  React.Component {
         return (
             <StickyContainer>
             <Sticky>
-            <Header as='h3' block>
-                <Label> <Link to="/cart">
+            <Header as='h3' block textAlign={'justified'}>
+                <Label> <Link to="/">
+                <Icon name='home' size='big' />
+            </Link></Label>
+                <Label className={'floatRight'}> <Link to="/cart">
                     <Icon name='shopping cart' size='big' />{this.state.selectedGames.length}
                </Link></Label>
-
             </Header>
             </Sticky>
             </StickyContainer>

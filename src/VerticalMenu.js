@@ -10,10 +10,10 @@ import classnames from 'classnames'
 //console.log(fetchGenres);
 class VerticalMenu extends  React.Component {
     state={ activeItem:'popular',
-        loader:true
-    }
+        loader:true,
+    };
     componentDidMount () {
-        this.props.fetchGenres().then(this.setState({loader:false}))
+        this.props.fetchGenres().then(()=>{console.log(this.state.loader);this.setState({loader:false})})
     }
     createGenreList(){
         return this.props.genres.map((genre)=>{
@@ -26,11 +26,12 @@ class VerticalMenu extends  React.Component {
     render(){
 return (
     <div className="four wide column">
-        {this.state.loader===false?
+        <Loader active={this.state.loader}>Loading</Loader>
         <Menu fluid vertical tabular>
             <Menu.Item name='Most Popular Games' active={this.state.activeItem === 'popular'} onClick={()=>{this.props.fetchPopularGames();this.setState({activeItem:'popular'})}}/>
             {this.createGenreList()}
-        </Menu>: <Loader>Loading</Loader>}
+        </Menu>
+
         </div>
 )
     }
