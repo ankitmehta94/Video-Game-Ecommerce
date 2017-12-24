@@ -44,7 +44,7 @@ class SummarySegment extends React.Component{
         //console.log(esrbLink1+esrbArray[this.state.esrb.rating]+esrbLink2);
         // let pegiValue = pegiArray[this.state.pegi.rating]
         return (<Segment>
-            <Segment raised>
+            <Segment raised className="max-100px-scroll">
                 <Label as='a' color='red'  ribbon>Summary</Label>{this.props.game.summary}</Segment>
             {this.props.game.storyline&&<Segment raised><Label as='a' color='blue' ribbon>Storyline</Label>{this.props.game.storyline}</Segment>}
             <List horizontal>

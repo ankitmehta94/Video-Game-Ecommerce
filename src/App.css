@@ -68,6 +68,27 @@ div[data-reactroot]{
   flex-direction: row;
   justify-content: center;
 }
+.flex-row-start{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.flex-row-end{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.flex-row-space-around{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.height35px{
+  height: 35px!important;
+}
+.width35px{
+  width: 35px!important;
+}
 .navHeight{
   height: 7vh;
 }
@@ -76,8 +97,21 @@ div[data-reactroot]{
   flex-direction: row;
   justify-content: space-between;
 }
+.max-100px-scroll{
+  max-height: 100px;
+  overflow-y: auto;
+}
+.noMargin{
+  margin:0px!important;
+}
 .padding2cent{
-  padding: 2%
+  padding: 2%;
+}
+.padding-bottom-2cent{
+  padding-bottom: 2%;
+}
+.padding2cent-ver{
+  padding: 2% 0px;
 }
 .displayNone{
 display: none!important;
@@ -101,6 +135,19 @@ display: flex!important;
   width: 20%;
   max-width: 20%;
 }
+.width75cent{
+  min-width: 75%;
+  width: 75%;
+  max-width: 75%;
+}
+.width25cent{
+  min-width: 25%;
+  width: 25%;
+  max-width: 25%;
+}
 .width70cent{
   width: 70%;
+}
+.padding1cent{
+  padding: 1%;
 }

@@ -2,6 +2,7 @@
  * Created by ankit on 4/24/17.
  */
 import React from 'react'
+import {removeGameFromCart} from './actions'
 import {connect} from 'react-redux';
 import './index.css'
 import { Step , Statistic, Grid, Item, Button ,Icon,  Form, Menu, Image,Header, Modal,Message } from 'semantic-ui-react'
@@ -34,21 +35,28 @@ class CartPage extends  React.Component {
 
     }
     componentDidMount () {
-        this.setState({selectedGames:this.props.selectedGames})
+           console.log(this.props.selectedGames.length);
+        if(this.props.selectedGames.length===0){
+            window.location = '/';
+        }else{
+            this.setState({selectedGames:this.props.selectedGames})
+        }
+        //this.setState({selectedGames:this.props.selectedGames})
     }
     createItemList(){
-        return(  <Item.Group>{this.createItems(this.state.selectedGames)}</Item.Group>)
+        return(  <Item.Group className="full-width">{this.createItems(this.state.selectedGames)}</Item.Group>)
     }
     createItems(games){
         console.log(games)
        return games.map((game=>{
            return (<Item key={game.id} >
-                <Item.Image size='tiny' src={'https:' + game.cover.url} />
+                <Item.Image size='small' src={game.cover.url} />
                 <Item.Content verticalAlign='middle'>
                     <Item.Header >{game.name}</Item.Header>
                     <Item.Meta >
                         <span className='price'>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</span>
                     </Item.Meta>
+                    <Icon name='cross' />
                 </Item.Content>
             </Item>)
         }))
@@ -59,8 +67,10 @@ class CartPage extends  React.Component {
         let autoFill = ()=>{this.setState({fPeople:this.props.people[getRandomArbitrary(0,50)]});console.log('What the fuck?')}
         if(this.state.activeStep==='address'){
             console.log(this.state.fPeople)
-            return (<Grid centered><Grid.Row>
+            return (<div className="full-width flex-col-start">
+                <div className="full-width flex-col-start padding-bottom-2cent">
                 <Message
+                    className="full-width flex-row-center"
                     attached
                     floating={true}
                     compact={false}
@@ -75,28 +85,32 @@ class CartPage extends  React.Component {
                     <Form.Input label='Email' placeholder='Email' type='text'  value={this.state.fPeople.email} />
                     <Form.Checkbox inline label='I agree to the terms and conditions which are to play these kickass games' />
                 </Form>
-            </Grid.Row>
-            <Grid.Row>
+            </div>
+            <div className="full-width flex-row-center padding-bottom-2cent">
                 <Button animated='vertical' onClick={autoFill}>
                     <Button.Content visible>Too Lazy?</Button.Content>
                     <Button.Content hidden>
                         Auto-Fill
                     </Button.Content>
                 </Button>
-            </Grid.Row>
-                <Grid.Row>  <Button animated='vertical' onClick={this.goToPayment}>
+            </div>
+            <div className="full-width flex-row-end padding-bottom-2cent" >  <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToPayment}>
                 <Button.Content visible>NEXT</Button.Content>
                 <Button.Content hidden>
                     <Icon name='chevron right' />
                 </Button.Content>
-            </Button></Grid.Row></Grid>)
+            </Button></div>
+
+                </div>)
         }
     }
     renderPayment(pay) {
-        return (<Grid.Column width={8} centered>
-            <Grid.Row><Image src={'https://raw.githubusercontent.com/ankitmehta94/Video-Game-Ecommerce/master/src/assets/'+pay.icon} size={'small'}/></Grid.Row>
-            <Grid.Row> </Grid.Row>
-                <Modal trigger={<Button animated='vertical'>
+        return (<div width={12} className="flex-col-space-around full-height full-width">
+            <div className="full-width flex-row-center align-items-center"> 
+                <Image src={'https://raw.githubusercontent.com/ankitmehta94/Video-Game-Ecommerce/master/src/assets/'+pay.icon} size={'small'}/>
+            </div>
+            <div className="full-width flex-row-center align-items-center"> 
+                <Modal trigger={<Button  animated='vertical'>
                     <Button.Content visible>PAY</Button.Content>
                     <Button.Content hidden>
                         {this.totalAmountToPay()}
@@ -108,7 +122,9 @@ class CartPage extends  React.Component {
                             <Header>Sorry! You don't actually get the game(s), but you didn't actually pay either. No harm no foul!!!</Header>
                         </Modal.Description>
                     </Modal.Content>
-                </Modal></Grid.Column>
+                </Modal>
+                </div>
+                </div>
     )
     }
 
@@ -134,7 +150,9 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
         }else{
             this.setState({disableItemsButton:true})
                 return(
-                    <Message content={'THERE ARE NO GAMES IN YOUR CART '}/>
+                    <div className="flex-row-center full-width">
+                        <Message content={'THERE ARE NO GAMES IN YOUR CART '}/>
+                    </div>
                     )
 
         }
@@ -142,9 +160,8 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
 
     render(){
         return (
-            <Grid centered>
-                <Grid.Row>
-        <Step.Group>
+            <div centered className="full-width flex-col-start">
+        <Step.Group className="full-width noMargin">
             <Step disabled={this.state.activeStep!=='totalling'}>
                 <Step.Title>GAMES</Step.Title>
                 <Step.Description>Your Selected Games</Step.Description>
@@ -158,28 +175,30 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
                 <Step.Description>Choose your shipping options</Step.Description>
             </Step>
         </Step.Group>
-                </Grid.Row>
-                {this.state.activeStep==='totalling'&&<Grid centered>
-            <Grid.Row>{this.createItemList()}</Grid.Row>
+                {this.state.activeStep==='totalling'&&
+                <div className="full-width padding1cent flex-col-start">
+            <div className="full-width flex-row-start padding-bottom-2cent">{this.createItemList()}</div>
 
-            <Grid.Row>{this.howMuchToPay()}</Grid.Row>
-            <Grid.Row>  <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToAddress}>
+            <div className="full-width flex-row-end padding-bottom-2cent" >{this.howMuchToPay()}</div>
+            <div className="full-width flex-row-end padding-bottom-2cent" >  <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToAddress}>
                 <Button.Content visible>NEXT</Button.Content>
                 <Button.Content hidden>
                     <Icon name='chevron right' />
                 </Button.Content>
-            </Button></Grid.Row>
+            </Button></div>
 
-        </Grid>}      {this.renderForm()}
-                {this.state.activeStep==='payment'&&<Grid centered><Grid.Column width={8}>
+        </div>}      {this.renderForm()}
+                {this.state.activeStep==='payment'&&
+                <div className="full-width flex-row-start full-height" centered>
+                <div className="width25cent flex-col-center">
                     <Menu fluid vertical tabular>
                         {this.createPaymentList()}
                     </Menu>
-                </Grid.Column>
+                </div>
                     {this.renderPayment(this.state.activePayType)}
-                </Grid>}
+                </div>}
 
-            </Grid>)
+            </div>)
 
 
     }
