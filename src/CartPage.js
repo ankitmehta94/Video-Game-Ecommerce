@@ -121,7 +121,7 @@ return (<Menu.Item key={pay.name} name={pay.name} active={this.state.activePayTy
     goToPayment=()=>{this.setState({activeStep:'payment',addressDone:true,totallingDone:true})}
     totalAmountToPay(){
         let pay = 0;
-        this.props.selectedGames.map((game=>{
+        this.props.selectedGames.forEach((game=>{
             if(game.aggregated_rating){
                 pay += Math.round(game.aggregated_rating)}
         }));

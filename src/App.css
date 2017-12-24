@@ -17,8 +17,29 @@
 .App-intro {
   font-size: large;
 }
-
+div[data-reactroot]{
+  height: 100%;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+.max-height-200px{
+  max-height: 200px;
+}
+.image-size{
+  width:20vw;
+  height:25vh;
+}
+.max-height-80cent{
+  max-height: 80%;
+}
+.full-height{
+  height:100%;
+}
+.flex-col-space-around{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }

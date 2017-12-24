@@ -8,7 +8,7 @@ import {addGameToCart} from './actions'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-const pegiArray = {'3':'1','7':'2','12':'3','16':'3','5':'4'};
+//const pegiArray = {'3':'1','7':'2','12':'3','16':'3','5':'4'};
 const pegiLink1 = 'http://www.pegi.info/en/index/id/33/media/img/32';
 const esrbLink1 = 'https://esrbstorage.blob.core.windows.net/esrbcontent/images/ratingsymbol_';
 const pegiLink2 = '.gif';
@@ -17,8 +17,8 @@ const esrbArray =['rp','ec','e','ec10','t','m','ao'];
 
 class SummarySegment extends React.Component{
     state = {
-        esrb:this.props.game.esrb!=undefined?this.props.game.esrb:null,
-        pegi:this.props.game.pegi!=undefined?this.props.game.pegi:null,
+        esrb:this.props.game.esrb!==undefined?this.props.game.esrb:null,
+        pegi:this.props.game.pegi!==undefined?this.props.game.pegi:null,
         timeToBeat:this.props.game.time_to_beat?this.props.game.time_to_beat:null
     }
     componentWillReceiveProps = (nextProps) =>{

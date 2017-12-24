@@ -8,23 +8,25 @@ import {fetchPopularGames,addGameToCart} from './actions'
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom'
 class GamesList extends  React.Component {
-    state={loader:true};
-    componentDidMount () {
-        this.props.fetchPopularGames().then(this.setState({loader:false}))
-    }
-    createGameCard(){
-        return this.props.games.map((game)=>{
-            console.log(game);
-            if(game.cover!==undefined){
-                return (
+	state={loader:true};
+	componentDidMount () {
+		this.props.fetchPopularGames().then(()=>{console.log(this.state.loader);
+		this.setState({loader:false})
+		})
+	}
+	createGameCard(){
+		return this.props.games.map((game)=>{
+			console.log(game);
+			if(game.cover!==undefined){
+				return (
                     <Card key={game.id}>
                         <Reveal animated='move up'>
                             <Reveal.Content visible>
-                                <Image src={'https:' + game.cover.url} size='medium' />
+                                <Image src={game.cover.url} className="image-size" />
                             </Reveal.Content>
-                            <Reveal.Content hidden>
-                                <Grid  centered  verticalAlign='middle' container={true}>
-                                    <Grid.Column verticalAlign='middle'>
+                            <Reveal.Content hidden className="full-height">
+                                <Grid  centered  verticalAlign='middle' container={true} className="full-height">
+                                    <Grid.Column verticalAlign='middle' >
                                         <Button.Group attached='top' vertical >
                                             <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
                                                 <Button.Content visible>ADD TO CART</Button.Content>
@@ -33,16 +35,16 @@ class GamesList extends  React.Component {
                                                 </Button.Content>
                                             </Button>
                                             <Link to="/cart">
-                                            <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
-                                                <Button.Content visible>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</Button.Content>
-                                                <Button.Content hidden>
-                                                    {game.aggregated_rating?'BUY':'GET'}
-                                                </Button.Content>
-                                            </Button>
+                                                <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
+                                                    <Button.Content visible>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</Button.Content>
+                                                    <Button.Content hidden>
+														{game.aggregated_rating?'BUY':'GET'}
+                                                    </Button.Content>
+                                                </Button>
                                             </Link>
                                         </Button.Group>
                                         <Grid.Row centered>
-                                            {game.aggregated_rating &&<Rating icon='star' defaultRating={game.aggregated_rating*0.05} maxRating={5} disabled={true} />}
+											{game.aggregated_rating &&<Rating icon='star' defaultRating={game.aggregated_rating*0.05} maxRating={5} disabled={true} />}
                                         </Grid.Row>
                                     </Grid.Column>
                                 </Grid>
@@ -54,36 +56,35 @@ class GamesList extends  React.Component {
                             </Card.Header>
                         </Card.Content>
                     </Card>
+				)
+			}
+		})
 
 
-                )
-            }
-        })
-
-
-    }
-    createCardGameList(){
-        return (
+	}
+	createCardGameList(){
+		return (
             <div className="ui three stackable cards">
-                {this.createGameCard()}
+				{this.createGameCard()}
             </div>
-        )
-    }
-    render(){
-        return (
-            <div className="twelve wide column">
+		)
+	}
+	render(){
+		return (
+            <div className="twelve wide column" >
                 <Loader active={this.state.loader}>Loading</Loader>
-                {this.createCardGameList()}
+				{this.createCardGameList()}
             </div>
-        )
-    }
+		)
+	}
 }
 function mapStateToProps(state) {
-    return {
-        games:state.games
-    }
+    console.log(state);
+	return {
+		games:state.games
+	}
 }
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({fetchPopularGames:fetchPopularGames,addGameToCart:addGameToCart}, dispatch);
+	return bindActionCreators({fetchPopularGames:fetchPopularGames,addGameToCart:addGameToCart}, dispatch);
 }
 export default connect(mapStateToProps,matchDispatchToProps)(GamesList)

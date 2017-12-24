@@ -5,18 +5,28 @@ export  const GENRES_RECEIVED = 'GENRES_RECEIVED';
 export  const GAMES_RECEIVED = 'GAMES_RECEIVED';
 export  const GAME_DETAIL_RECEIVED = 'GAME_DETAIL_RECEIVED';
 export  const GAME_DETAIL_ADDED_TO_CART = 'GAME_DETAIL_ADDED_TO_CART';
-const header = {'X-Mashape-Key': 'PZzFnwlUa7mshIR29b7zMporUI45p16v4AejsnayIdsA9wY2nj','Accept': 'application/json'}
-
+//const headers = {'user-key': '4610373d01125542a9c7c3618762c6c2','Accept': 'application/json'}
+const headers = {}
+const baseUrl = 'http://localhost:6500/';
+//const authString = '&user_key=4610373d01125542a9c7c3618762c6c2';
+const authString = '';
+console.log(headers);
+// export function fetchGenres() {
+//     return dispatch => {
+//       return fetch('http://localhost:6500/genres' + authString,{headers: headers})
+//             .then(res => res.json()).then(data =>dispatch(genresReceived(data)))
+//     }
+// }
 export function fetchGenres() {
     return dispatch => {
-      return fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/genres/?fields=*&limit=40',{headers: {'X-Mashape-Key': 'PZzFnwlUa7mshIR29b7zMporUI45p16v4AejsnayIdsA9wY2nj','Accept': 'application/json'}})
-            .then(res => res.json()).then(data =>dispatch(genresReceived(data)))
+       return fetch(baseUrl+'genres' + authString)
+	       .then(res => res.json()).then(data =>dispatch(genresReceived(data)))
     }
 }
 export function fetchPopularGames() {
     return dispatch => {
-       return fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=name,cover,aggregated_rating&order=popularity:desc',{headers: {'X-Mashape-Key': 'PZzFnwlUa7mshIR29b7zMporUI45p16v4AejsnayIdsA9wY2nj','Accept': 'application/json'}})
-            .then(res => res.json()).then(data =>dispatch(popularGamesReceived(data)))
+       return fetch(baseUrl+'games' + authString)
+	       .then(res => res.json()).then(data =>dispatch(popularGamesReceived(data)))
     }
 }
 export function addGameToCart(game){
@@ -30,13 +40,13 @@ export function getGamesOfGenre(games) {
    let gameId = games.slice(0,30).join(',');
    console.log(gameId);
     return dispatch => {
-        fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/games/'+gameId+'?fields=name,cover,aggregated_rating&order=popularity:desc',{headers: {'X-Mashape-Key': 'PZzFnwlUa7mshIR29b7zMporUI45p16v4AejsnayIdsA9wY2nj','Accept': 'application/json'}})
+        fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/games/'+gameId+'?fields=name,cover,aggregated_rating&order=popularity:desc' + authString,{headers: headers})
             .then(res => res.json()).then(data =>dispatch(popularGamesReceived(data)))
     }
 }
 export function fetchGameInformation(gameId) {
     return dispatch => {
-        fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/games/'+gameId+'?fields=*',{headers: {'X-Mashape-Key': 'PZzFnwlUa7mshIR29b7zMporUI45p16v4AejsnayIdsA9wY2nj','Accept': 'application/json'}})
+        fetch('https://igdbcom-internet-game-database-v1.p.mashape.com/games/'+gameId+'?fields=*' + authString,{headers: headers})
             .then(res => res.json()).then(data =>dispatch(detailsOfGameReceived(data[0])))
     }
 }

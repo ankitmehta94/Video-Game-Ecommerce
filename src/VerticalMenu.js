@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import {fetchGenres,getGamesOfGenre,fetchPopularGames} from './actions'
 import { Menu, Loader } from 'semantic-ui-react'
 import {bindActionCreators} from 'redux';
-import classnames from 'classnames'
 //console.log(fetchGenres);
 class VerticalMenu extends  React.Component {
     state={ activeItem:'popular',

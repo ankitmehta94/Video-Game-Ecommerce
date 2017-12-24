@@ -4,7 +4,7 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import './index.css'
-import { Header, Label, Icon, Segment, Sidebar, Menu } from 'semantic-ui-react'
+import { Header, Label, Icon } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import { StickyContainer, Sticky } from 'react-sticky';
 class navBar extends  React.Component {

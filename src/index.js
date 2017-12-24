@@ -20,7 +20,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter >
             <div>
-                <NavBar/>
+                <NavBar className="navSticky"/>
             <Route exact path="/" component={App}/>
             <Route exact path="/games/:id" component={GamesPage}/>
                 <Route exact path="/cart" component={CartPage}/>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 
 import './App.css';
 import VerticalMenu from './VerticalMenu.js'
@@ -7,8 +6,8 @@ import GamesList from './GamesList'
 class App extends Component {
   render() {
     return (
-        <div className="ui container">
-      <div className="ui grid">
+        <div className="ui container full-height">
+      <div className="ui grid full-height">
         <VerticalMenu />
         <GamesList  />
       </div>
