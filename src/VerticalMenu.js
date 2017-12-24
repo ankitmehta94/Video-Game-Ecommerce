@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {fetchGenres,getGamesOfGenre,fetchPopularGames} from './actions'
 import { Menu, Loader } from 'semantic-ui-react'
 import {bindActionCreators} from 'redux';
+import classNames from 'classnames';
 //console.log(fetchGenres);
 class VerticalMenu extends  React.Component {
     state={ activeItem:'popular',
@@ -23,10 +24,14 @@ class VerticalMenu extends  React.Component {
         })
     }
     render(){
+        let menuClass = classNames({'displayNone':this.state.loader});
+        console.log(menuClass);
 return (
-    <div className="four wide column">
-        <Loader active={this.state.loader}>Loading</Loader>
-        <Menu fluid vertical tabular>
+    <div className="width20cent flex-col-center align-items-center max-100-scroll">
+        <div>
+            <Loader inline={true} active={this.state.loader}>Loading</Loader>
+        </div>
+        <Menu fluid vertical tabular className={menuClass}>
             <Menu.Item name='Most Popular Games' active={this.state.activeItem === 'popular'} onClick={()=>{this.props.fetchPopularGames();this.setState({activeItem:'popular'})}}/>
             {this.createGenreList()}
         </Menu>

@@ -13,12 +13,20 @@
   padding: 20px;
   color: white;
 }
-
+body{
+  margin: 0px;
+  height:100vh;
+  width: 100vw;
+}
 .App-intro {
   font-size: large;
 }
 div[data-reactroot]{
   height: 100%;
+}
+.max-100-scroll{
+  overflow-y: auto;
+    max-height: 98vh;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
@@ -41,5 +49,58 @@ div[data-reactroot]{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+.flex-col-start{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.flex-col-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.align-items-center{
   align-items: center;
+}
+.flex-row-center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.navHeight{
+  height: 7vh;
+}
+.flex-row-space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.padding2cent{
+  padding: 2%
+}
+.displayNone{
+display: none!important;
+}
+.displayFlex{
+display: flex!important;
+}
+.full-width{
+  width: 100%;
+}
+.width30cent{
+  width: 30%;
+}
+.width80cent{
+  min-width: 80%;
+  width: 80%;
+  max-width: 80%;
+}
+.width20cent{
+  min-width: 20%;
+  width: 20%;
+  max-width: 20%;
+}
+.width70cent{
+  width: 70%;
 }

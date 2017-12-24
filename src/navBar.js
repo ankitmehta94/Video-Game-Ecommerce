@@ -14,22 +14,44 @@ class navBar extends  React.Component {
     componentWillReceiveProps = (nextProps) =>{
         this.setState({selectedGames:nextProps.selectedGames})
     }
-    render(){
+    returnNavBar(){
         return (
-            <StickyContainer>
-            <Sticky>
-            <Header as='h3' block textAlign={'justified'}>
-                <Label> <Link to="/">
-                <Icon name='home' size='big' />
-            </Link></Label>
-                <Label className={'floatRight'}> <Link to="/cart">
-                    <Icon name='shopping cart' size='big' />{this.state.selectedGames.length}
-               </Link></Label>
-            </Header>
-            </Sticky>
-            </StickyContainer>
+            <div className="flex-row-space-between full-width"></div>
+            )
+    }
+    render(){
 
-        )
+        return (
+            <div className=" full-width navHeight padding2cent navStyle">
+                <div className="flex-row-space-between full-width">
+                    <Label>
+                        <Link to="/">
+                            <Icon name='home' size='big' />
+                        </Link>
+                    </Label>
+                    <Label className={'floatRight'}> 
+                        <Link to="/cart">
+                            <Icon name='shopping cart' size='big' />&nbsp;{this.state.selectedGames.length}
+                        </Link>
+                    </Label>
+                </div>
+            </div>
+            )
+        // return (
+        //     <StickyContainer>
+        //     <Sticky>
+        //     <Header as='h3' block textAlign={'justified'}>
+        //         <Label> <Link to="/">
+        //         <Icon name='home' size='big' />
+        //     </Link></Label>
+        //         <Label className={'floatRight'}> <Link to="/cart">
+        //             <Icon name='shopping cart' size='big' />{this.state.selectedGames.length}
+        //        </Link></Label>
+        //     </Header>
+        //     </Sticky>
+        //     </StickyContainer>
+
+        // )
     }
 }
 function mapStateToProps(state,props) {

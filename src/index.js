@@ -19,8 +19,8 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter >
-            <div>
-                <NavBar className="navSticky"/>
+            <div className="flex-col-start full-height">
+                <NavBar />
             <Route exact path="/" component={App}/>
             <Route exact path="/games/:id" component={GamesPage}/>
                 <Route exact path="/cart" component={CartPage}/>

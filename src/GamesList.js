@@ -14,6 +14,29 @@ class GamesList extends  React.Component {
 		this.setState({loader:false})
 		})
 	}
+    returnButtonsAndRating (game){
+        return (
+                <div className="full-height flex-col-space-around align-items-center">
+                     <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
+                        <Button.Content visible>ADD TO CART</Button.Content>
+                        <Button.Content hidden>
+                            <Icon name='shop' />
+                        </Button.Content>
+                    </Button>
+                    <Link to="/cart">
+                        <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
+                            <Button.Content visible>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</Button.Content>
+                            <Button.Content hidden>
+                                {game.aggregated_rating?'BUY':'GET'}
+                            </Button.Content>
+                        </Button>
+                    </Link>
+                    <div>
+                        {game.aggregated_rating &&<Rating icon='star' defaultRating={game.aggregated_rating*0.05} maxRating={5} disabled={true} />}
+                    </div>
+                </div>
+            )
+    }
 	createGameCard(){
 		return this.props.games.map((game)=>{
 			console.log(game);
@@ -25,29 +48,7 @@ class GamesList extends  React.Component {
                                 <Image src={game.cover.url} className="image-size" />
                             </Reveal.Content>
                             <Reveal.Content hidden className="full-height">
-                                <Grid  centered  verticalAlign='middle' container={true} className="full-height">
-                                    <Grid.Column verticalAlign='middle' >
-                                        <Button.Group attached='top' vertical >
-                                            <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
-                                                <Button.Content visible>ADD TO CART</Button.Content>
-                                                <Button.Content hidden>
-                                                    <Icon name='shop' />
-                                                </Button.Content>
-                                            </Button>
-                                            <Link to="/cart">
-                                                <Button animated='vertical' onClick={()=>{this.props.addGameToCart(game)}}>
-                                                    <Button.Content visible>{game.aggregated_rating?'$'+Math.round(game.aggregated_rating):'FREE'}</Button.Content>
-                                                    <Button.Content hidden>
-														{game.aggregated_rating?'BUY':'GET'}
-                                                    </Button.Content>
-                                                </Button>
-                                            </Link>
-                                        </Button.Group>
-                                        <Grid.Row centered>
-											{game.aggregated_rating &&<Rating icon='star' defaultRating={game.aggregated_rating*0.05} maxRating={5} disabled={true} />}
-                                        </Grid.Row>
-                                    </Grid.Column>
-                                </Grid>
+                                {this.returnButtonsAndRating(game)}
                             </Reveal.Content>
                         </Reveal>
                         <Card.Content>
@@ -64,16 +65,16 @@ class GamesList extends  React.Component {
 	}
 	createCardGameList(){
 		return (
-            <div className="ui three stackable cards">
+            <div className="ui four stackable cards">
 				{this.createGameCard()}
             </div>
 		)
 	}
 	render(){
 		return (
-            <div className="twelve wide column" >
+            <div className="width80cent padding2cent max-100-scroll" >
                 <Loader active={this.state.loader}>Loading</Loader>
-				{this.createCardGameList()}
+				{this.state.loader?'':this.createCardGameList()}
             </div>
 		)
 	}

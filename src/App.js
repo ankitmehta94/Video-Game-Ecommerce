@@ -6,12 +6,10 @@ import GamesList from './GamesList'
 class App extends Component {
   render() {
     return (
-        <div className="ui container full-height">
-      <div className="ui grid full-height">
-        <VerticalMenu />
-        <GamesList  />
+      <div className="flex-row-center full-height">
+        <VerticalMenu  />
+        <GamesList   />
       </div>
-        </div>
     );
   }
 }
