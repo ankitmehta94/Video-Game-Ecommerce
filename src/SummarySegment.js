@@ -14,6 +14,7 @@ const esrbLink1 = 'https://esrbstorage.blob.core.windows.net/esrbcontent/images/
 const pegiLink2 = '.gif';
 const esrbLink2 = '.png';
 const esrbArray =['rp','ec','e','ec10','t','m','ao'];
+const NoSummary = 'Summary Not Available';
 
 class SummarySegment extends React.Component{
     state = {
@@ -43,9 +44,9 @@ class SummarySegment extends React.Component{
     render(){
         //console.log(esrbLink1+esrbArray[this.state.esrb.rating]+esrbLink2);
         // let pegiValue = pegiArray[this.state.pegi.rating]
-        return (<Segment>
+        return (<Segment className='full-width'>
             <Segment raised className="max-100px-scroll">
-                <Label as='a' color='red'  ribbon>Summary</Label>{this.props.game.summary}</Segment>
+                <Label as='a' color='red'  ribbon>Summary</Label>{this.props.game.summary?this.props.game.summary:NoSummary}</Segment>
             {this.props.game.storyline&&<Segment raised><Label as='a' color='blue' ribbon>Storyline</Label>{this.props.game.storyline}</Segment>}
             <List horizontal>
                 <List.Item>

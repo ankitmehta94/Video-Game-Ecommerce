@@ -110,7 +110,7 @@ class CartPage extends  React.Component {
                 <Image src={'https://raw.githubusercontent.com/ankitmehta94/Video-Game-Ecommerce/master/src/assets/'+pay.icon} size={'small'}/>
             </div>
             <div className="full-width flex-row-center align-items-center"> 
-                <Modal trigger={<Button  animated='vertical'>
+                <Modal className="max-height-20cent" trigger={<Button  animated='vertical' >
                     <Button.Content visible>PAY</Button.Content>
                     <Button.Content hidden>
                         {this.totalAmountToPay()}

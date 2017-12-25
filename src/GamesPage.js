@@ -46,7 +46,6 @@ createVideoDisplay(){
                     document.getElementById('embeddedVideo').src = link;
                 }
             }
-
             return(  <div className="flex-row-space-around">
                 <div className="width20cent flex-row-center align-items-center" ><Icon name={'chevron circle left'} size='huge' onClick={previousVideo} /></div>
                 <div  width={10}><Segment>
@@ -54,10 +53,13 @@ createVideoDisplay(){
                 </Segment></div>
                 <div className="width20cent flex-row-center align-items-center"><Icon name={'chevron circle right'} size='huge' onClick={nextVideo}/></div>
             </div>)
+        }else{
+            return ( <Header as='h3' block textAlign={'centered'} content={'NO VIDEOS AVAILABLE'}/>);
         }
+        
 }
     componentDidMount () {
-        console.log(this.props.match.params.id)
+        //console.log(this.props.match.params.id);
         this.props.fetchGameInformation(this.props.match.params.id)
     }
     createCoverDisplay(){
@@ -91,7 +93,7 @@ createVideoDisplay(){
                             <SummarySegment game={this.state.game}/>
                         </div>
                     </div>
-                    {this.createVideoDisplay()}
+                    {this.state.loader?'':this.createVideoDisplay()}
                 </div>
             )
         // return (

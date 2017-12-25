@@ -8,9 +8,12 @@ export  const GAME_DETAIL_ADDED_TO_CART = 'GAME_DETAIL_ADDED_TO_CART';
 export  const GAME_DETAIL_REMOVED_FROM_CART = 'GAME_DETAIL_REMOVED_FROM_CART';
 //const headers = {'user-key': '4610373d01125542a9c7c3618762c6c2','Accept': 'application/json'}
 const headers = {}
+import env from './env';
 //const baseUrl = 'http://localhost:6500/';
-const baseUrl = window.__env1.apiUrl;
+const baseUrl = env.apiUrl;
+
 //const authString = '&user_key=4610373d01125542a9c7c3618762c6c2';
+console.log(env)
 const authString = '';
 console.log(headers);
 // export function fetchGenres() {

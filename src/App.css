@@ -97,6 +97,9 @@ div[data-reactroot]{
   flex-direction: row;
   justify-content: space-between;
 }
+.max-height-20cent{
+  max-height: 20%;
+}
 .max-100px-scroll{
   max-height: 100px;
   overflow-y: auto;
