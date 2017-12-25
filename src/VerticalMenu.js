@@ -12,6 +12,13 @@ class VerticalMenu extends  React.Component {
     state={ activeItem:'popular',
         loader:true,
     };
+    constructor(props){
+        super(props);
+        this.state = { 
+            activeItem:'popular',
+            loader:true,
+                    };
+    }
     componentDidMount () {
         this.props.fetchGenres().then(()=>{console.log(this.state.loader);this.setState({loader:false})})
     }
@@ -24,8 +31,10 @@ class VerticalMenu extends  React.Component {
         })
     }
     render(){
-        let menuClass = classNames({'displayNone':this.state.loader});
-        console.log(menuClass);
+        let {loader} = this.state;
+        let menuClass = classNames({
+            'displayNone':loader
+        });
 return (
     <div className="width20cent flex-col-center align-items-center max-100-scroll">
         <div>
