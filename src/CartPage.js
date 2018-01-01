@@ -47,13 +47,13 @@ class CartPage extends  React.Component {
         //this.setState({selectedGames:this.props.selectedGames})
     }
     createItemList(){
-        return(  <Item.Group className="full-width">{this.createItems(this.state.selectedGames)}</Item.Group>)
+        return(  <Item.Group className="full-width scroll-full-height">{this.createItems(this.state.selectedGames)}</Item.Group>)
     }
     createItems(games){
         console.log(games)
        return games.map((game=>{
            return (<Item key={game.id} >
-                <Image size='small' className="small-image" src={game.cover.url} />
+                <Image size='small' className="tiny-image" src={game.cover.url} />
                 <Item.Content verticalAlign='middle'>
                     <Item.Header >{game.name}</Item.Header>
                     <Item.Meta className="full-width flex-row-space-between" >
@@ -65,7 +65,7 @@ class CartPage extends  React.Component {
         }))
 
     }
-    autoFill (){
+    autoFill(){
         this.setState({fPeople:this.props.people[getRandomArbitrary(0,50)]});
     }
     renderForm(){
@@ -91,12 +91,12 @@ class CartPage extends  React.Component {
                             </Form>
                         </div>
                         <div className="full-width flex-row-center padding-bottom-2cent">
-                            <Button animated='vertical' onClick={this.autoFill}>
+                            <Button animated='vertical' onClick={this.autoFill.bind(this)}>
                                 <Button.Content visible>Too Lazy?</Button.Content>
                                 <Button.Content hidden>Auto-Fill</Button.Content>
                             </Button>
                         </div>
-                        <div className="full-width flex-row-end padding-bottom-2cent" >
+                        <div className="full-width flex-row-end min-height-35px" >
                             <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToPayment}>
                                 <Button.Content visible>NEXT</Button.Content>
                                 <Button.Content hidden>
@@ -169,8 +169,8 @@ class CartPage extends  React.Component {
         if(selectedGames.length>0){
             return (
             <div className="full-width flex-col-start">
-                <Step.Group className="full-width noMargin">
-                    <Step disabled={this.state.activeStep!=='totalling'}>
+                <Step.Group className="full-width noMargin ">
+                    <Step disabled={this.state.activeStep!=='totalling'} className={''}>
                         <Step.Title>GAMES</Step.Title>
                         <Step.Description>Your Selected Games</Step.Description>
                     </Step>
@@ -187,7 +187,7 @@ class CartPage extends  React.Component {
                 <div className="full-width padding1cent flex-col-start">
                     <div className="full-width flex-row-start padding-bottom-2cent">{this.createItemList()}</div>
                     <div className="full-width flex-row-end padding-bottom-2cent" >{this.howMuchToPay()}</div>
-                    <div className="full-width flex-row-end padding-bottom-2cent" >
+                    <div className="full-width flex-row-end min-height-35px" >
                         <Button animated='vertical' disabled={this.state.disableItemsButton} onClick={this.goToAddress}>
                             <Button.Content visible>NEXT</Button.Content>
                             <Button.Content hidden>

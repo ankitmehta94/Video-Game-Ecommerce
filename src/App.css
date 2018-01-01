@@ -6,7 +6,10 @@
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
-
+.scroll-full-height{
+  max-height: 80%;
+  overflow-y: auto;
+}
 .App-header {
   background-color: #222;
   height: 150px;
@@ -23,6 +26,16 @@ body{
 }
 div[data-reactroot]{
   height: 100%;
+}
+.tiny-image{
+  width: 8vw!important;
+  height: 8vh!important;
+}
+.min-height-35px{
+  min-height: 35px;
+}
+.min-height-70px{
+  min-height: 70px;
 }
 .max-100-scroll{
   overflow-y: auto;
