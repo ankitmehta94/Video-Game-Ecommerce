@@ -8,11 +8,14 @@ import {fetchPopularGames,addGameToCart} from './actions'
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom'
 class GamesList extends  React.Component {
-	state={loader:true};
+    constructor(props){
+        super(props);
+        this.state = {
+            loader:true
+        }
+    }
 	componentDidMount () {
-		this.props.fetchPopularGames().then(()=>{console.log(this.state.loader);
-		this.setState({loader:false})
-		})
+		this.props.fetchPopularGames().then(()=>{this.setState({loader:false})})
 	}
     returnButtonsAndRating (game){
         return (
@@ -38,8 +41,8 @@ class GamesList extends  React.Component {
             )
     }
 	createGameCard(){
-		return this.props.games.map((game)=>{
-			console.log(game);
+        let {games} = this.props;
+		return games.map((game)=>{
 			if(game.cover!==undefined){
 				return (
                     <Card key={game.id}>
@@ -71,10 +74,11 @@ class GamesList extends  React.Component {
 		)
 	}
 	render(){
+        let {loader} = this.state;
 		return (
             <div className="width80cent padding2cent max-100-scroll" >
-                <Loader active={this.state.loader}>Loading</Loader>
-				{this.state.loader?'':this.createCardGameList()}
+                <Loader active={loader}>Loading</Loader>
+				{loader?'':this.createCardGameList()}
             </div>
 		)
 	}

@@ -9,9 +9,6 @@ import {bindActionCreators} from 'redux';
 import classNames from 'classnames';
 //console.log(fetchGenres);
 class VerticalMenu extends  React.Component {
-    state={ activeItem:'popular',
-        loader:true,
-    };
     constructor(props){
         super(props);
         this.state = { 

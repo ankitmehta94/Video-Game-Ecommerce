@@ -32,6 +32,10 @@ div[data-reactroot]{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.small-image{
+  width: 8vw!important;
+  height: 20vh!important;
+}
 .max-height-200px{
   max-height: 200px;
 }

@@ -41,14 +41,8 @@ export function addGameToCart(game){
         game
     }
 }
-export function removeGameFromCart(list,game){
-    list.forEach(function (datum, index) {
-        if(datum.id === game.id){
-            console.log(datum, index);
-        }
-        
-    });
-    console.log('-1');
+export function removeGameFromCart(game){
+    console.log(game)
     return {
         type:GAME_DETAIL_REMOVED_FROM_CART,
         game
